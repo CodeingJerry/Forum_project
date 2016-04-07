@@ -8,9 +8,9 @@
     <h1>Python部落论坛</h1>
     {% for b in blocks %}
     <div class="blockItem">
-       {{ b.name }}
-       {{ b.desc }}
-       {{ b.manager.username }}
+       {{ b.title }}
+       {{ b.des }}
+       {{ b.owner.username }}
     </div>
     {% endfor %}
   </body>
