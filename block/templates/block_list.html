@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Python部落论坛</title>
+  </head>
+  <body>
+    <h1>Python部落论坛</h1>
+    {% for b in blocks %}
+    <div class="blockItem">
+       {{ b.name }}
+       {{ b.desc }}
+       {{ b.manager.username }}
+    </div>
+    {% endfor %}
+  </body>
+</html>
