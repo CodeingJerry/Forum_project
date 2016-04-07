@@ -3,15 +3,35 @@
   <head>
     <meta charset="utf-8">
     <title>Python部落论坛</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body>
-    <h1>Python部落论坛</h1>
-    {% for b in blocks %}
-    <div class="blockItem">
-       {{ b.title }}
-       {{ b.des }}
-       {{ b.owner.username }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                &nbsp;
+            </div>
+            
+            <div class="col-md-8">
+                <h1><p class="bg-success text-center">Python部落论坛</p></h1>                     
+                {% for b in blocks %}     
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <span class="panel-title" style="font-size:18px;">{{ b.title }}</span>
+                    <span class="pull-right">管理员：{{ b.owner.username }}</span>
+                  </div>
+                  <div class="panel-body">
+                    {{ b.des }}
+                  </div>
+                </div>
+                
+                {% endfor %}           
+            </div>
+            
+            <div class="col-md-2">
+                &nbsp;
+            </div>
+        </div>
     </div>
-    {% endfor %}
   </body>
 </html>
