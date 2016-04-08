@@ -4,7 +4,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <span class="panel-title" style="font-size:18px;">
-              <a href="{% url 'article_list' block.id %}">{{ b.title }}</a>
+              <a href="{% url 'article_list' b.id %}">{{ b.title }}</a>
             </span>
             <span class="pull-right">管理员：{{ b.owner.username }}</span>
           </div>

@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
     {% block content %}
         <ol class="breadcrumb">
-          <li><a href="{% url 'block_list' %}">Ê×Ò³</a></li>
+          <li><a href="{% url 'block_list' %}">é¦–é¡µ</a></li>
           <li class="active">{{ block.title }}</li>
         </ol>
         <table class="table table-bordered">
           <tr>
-            <th>×´Ì¬</th>
-            <th>±êÌâ</th>
-            <th>×÷Õß</th>
-            <th>×îºó¸üĞÂÊ±¼ä</th>
+            <th>çŠ¶æ€</th>
+            <th>æ ‡é¢˜</th>
+            <th>ä½œè€…</th>
+            <th>æœ€åæ›´æ–°æ—¶é—´</th>
           </tr>
           {% for article in articles%}
           <tr>
