@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'block',
     'article',
+    'usercenter',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -71,7 +72,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'myforum.wsgi.application'
-
+LOGIN_REDIRECT_URL = '/'
+EMAIL_HOST = 'smtp.qq.com'
+# Port for sending e-mail.
+EMAIL_PORT = 25
+# Optional SMTP authentication information for EMAIL_HOST.
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
