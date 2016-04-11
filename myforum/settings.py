@@ -83,8 +83,6 @@ EMAIL_PORT = 25
 # Optional SMTP authentication information for EMAIL_HOST.
 # EMAIL_HOST_USER = ''
 # EMAIL_HOST_PASSWORD = ''
-# EMAIL_HOST_USER = ''
-# EMAIL_HOST_PASSWORD = ''
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 

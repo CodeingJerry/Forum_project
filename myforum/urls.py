@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^$', block_list, name = "block_list"),
     url(r'^article/', include('article.urls')),
     url(r'^usercenter/', include('usercenter.urls')),
+    # accounts login
     url(r'^accounts/', include('django.contrib.auth.urls')),
 ]

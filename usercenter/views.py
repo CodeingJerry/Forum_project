@@ -35,9 +35,9 @@ def register(request):
 
             activate_link = "http://%s%s" % ((request.get_host()),reverse("usercenter_activate",args=[new_code]))
             send_mail(u'激活邮件',u'您的激活链接为: %s' % activate_link,"895277169@qq.com",[email],fail_silently=False)
-            return redirect('login')
         else:
             return render_to_response("usercenter_register.html",{"error":error},context_instance=RequestContext(request))
+        return redirect('login')
 
 def activate(request,code):
     query = ActivateCode.objects.filter(code=code,expire_timestamp__gte=datetime.datetime.now())
