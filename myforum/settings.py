@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-from secret import *
+# from secret import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -74,13 +74,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myforum.wsgi.application'
 LOGIN_REDIRECT_URL = '/'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = '895277169@qq.com'
+SERVER_EMAIL = '895277169@qq.com'
 EMAIL_HOST = 'smtp.qq.com'
 # Port for sending e-mail.
 EMAIL_PORT = 25
 # Optional SMTP authentication information for EMAIL_HOST.
 # EMAIL_HOST_USER = ''
 # EMAIL_HOST_PASSWORD = ''
-
+EMAIL_HOST_USER = '895277169@qq.com'
+# EMAIL_HOST_PASSWORD = 'nzbhozejsookbfeg'
+EMAIL_HOST_PASSWORD = 'hbrpmeivwpdebeef'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
