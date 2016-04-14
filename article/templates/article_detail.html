@@ -14,30 +14,22 @@
           </div>
         </div>
 {#评论展示及分页#}
-        {% for comment in comments%}
+        {% for comment in comments %}
             <div class="panel panel-default">
               <div class="panel-body">
                 <p>作者:{{ comment.owner }}</p>
                 <p>评论内容：{{ comment.content | linebreaksbr }}</p>
-    {#          <tr>#}
-    {#            <td>{{ article.get_status_display }}</td>#}
-    {#            <td><a href = {% url 'ariticle_detail' article.id %}>{{ article.title }}</a></td>#}
-    {#            <!--<td>{{ article.content }}</td>-->#}
-    {#            <td>{{ article.owner }}</td>#}
-    {#            <td>{{ article.last_update_timestamp|date:"Y-m-d P" }}</td>#}
-    {#          </tr>#}
                 {% include "component/paginator.html" with param_name="comment_page_no" %}
               </div>
             </div>
             {% if user.is_authenticated %}
             <div class="input-group input-group-lg">
               <span class="input-group-addon">作者:{{ comment.owner }}</span>
-              <input type="text" id="commentContent" class="form-control" placeholder="Username" aria-describedby="sizing-addon1">
+              <input type="text" id="commentContent" class="form-control" placeholder="" aria-describedby="sizing-addon1">
               <button type="submit" id="commentBtn" class="btn btn-primary btn-sm active">发表</button>
             </div>
             {% endif %}
           {% endfor %}
-
         <script type="text/javascript">
             $(document).ready(function () {
               $("#commentBtn").click(function () {
@@ -48,7 +40,7 @@
                 var param = {"article_id": article_id, "to_comment_id": to_comment_id, "content": comment};
                 $.post("{% url 'create_comment' %}", param, function () {
                   $("#commentContent").val("");
-                  window.location.href = "{% url 'article_detail' article.id %}?comment_page_no=" + (page_cnt + 1);
+                  window.location.href = "{% url 'ariticle_detail' article.id %}?comment_page_no=" + (page_cnt + 1);
                 });
               })
             });
