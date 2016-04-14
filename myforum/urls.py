@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^usercenter/', include('usercenter.urls')),
     # accounts login
     url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^comment/', include('comment.urls')),
 ]

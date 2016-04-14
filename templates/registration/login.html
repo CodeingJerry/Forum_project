@@ -33,6 +33,7 @@
               <button type="submit" class="btn btn-primary btn-sm active">登录</button>
               <input type="hidden" name="next" value="{{ next }}">
             </form>
-            <p><a href="{% url 'usercenter_register' %}">没有账号，点击注册</a></p>
+            <p><a href="{% url 'password_reset' %}">忘记密码？点击找回</a></p>
+            <p><a href="{% url 'usercenter_register' %}">没有账号？点击注册</a></p>
         </div>
     {% endblock %}
