@@ -19,18 +19,5 @@ def create_comment(request):
 
 @login_required()
 def comment_list(request):
+    pass
     # article = Article.objects.get(id=article_id)
-    comment_page_no = int(request.GET.get('page_no','1'))
-    comments = Comment.objects.all()
-    (comment_lists,pagination_data) = paginate_queryset(comments,comment_page_no,cnt_per_page=1,half_show_length=5)
-    return render_to_response("article_detail.html",
-                              {"comments":comment_lists,
-                               # 'article':article,
-                               'has_previous':pagination_data['has_previous'],
-                               'has_next':pagination_data['has_next'],
-                               'previous_link':pagination_data['previous_link'],
-                               'next_link':pagination_data['next_link'],
-                               'page_cnt':pagination_data['page_cnt'],
-                               'current_no':pagination_data['current_no'],
-                               'page_links':pagination_data['page_links']},
-                              context_instance=RequestContext(request))

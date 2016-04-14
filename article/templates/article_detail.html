@@ -22,14 +22,16 @@
                 {% include "component/paginator.html" with param_name="comment_page_no" %}
               </div>
             </div>
-            {% if user.is_authenticated %}
-            <div class="input-group input-group-lg">
-              <span class="input-group-addon">作者:{{ comment.owner }}</span>
-              <input type="text" id="commentContent" class="form-control" placeholder="" aria-describedby="sizing-addon1">
-              <button type="submit" id="commentBtn" class="btn btn-primary btn-sm active">发表</button>
-            </div>
-            {% endif %}
           {% endfor %}
+            {% if user.is_authenticated %}
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon">作者:{{ user }}</span>
+              <input type="text" id="commentContent" class="form-control" placeholder="" aria-describedby="sizing-addon1">
+            </div>
+            <form method="post" action="">
+                <button type="submit" id="commentBtn" class="btn btn-primary btn-sm active">发表</button>
+            </form>
+            {% endif %}
         <script type="text/javascript">
             $(document).ready(function () {
               $("#commentBtn").click(function () {
