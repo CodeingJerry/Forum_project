@@ -5,46 +5,119 @@
           <li><a href={% url 'article_list' article.block.id %}>{{ article.block }}</a></li>
           <li class="active">{{ article.title }}</li>
         </ol>
-        <div class="panel panel-default">
-          <div class="panel-body">
-              <p>作者：{{ article.owner }}</p>
-              <p>标题：{{ article.title }}</p>
-              <p>内容：{{ article.content }}</p>
-              <p>创建时间：{{ article.create_timestamp|date:"Y-m-d P"}}</p>
+        <div class="col-sm-12">
+          <table class="table table-bordered">
+              <tr>
+                  <td class="author">
+                      <br />
+                      <center>作者：{{ article.owner.username }}</center>
+                  </td>
+                  <td class="content">
+                      <h6>发表于：{{ article.create_timestamp|date:"Y-m-d P"}}</h6>
+                      <h4>标题：{{ article.title }}</h4>
+                      <div>{{ article.content | linebreaksbr }}</div>
+                  </td>
+              </tr>
+            {% for comment in comments %}
+                <tr {% if forloop.last %}id="lastcomment" {% endif %}>
+                    <td class="author">
+                        <br />
+                        <center>作者：{{ comment.owner.username }}</center>
+                    </td>
+                    <td class="content">
+                        {% with comment.to_comment as to_comment %}
+                            {% if to_comment %}
+                                <blockquote>
+                                  <b>{{ to_comment.owner.username }}</b>
+                                  <br />
+                                  {{ to_comment.content|linebreaksbr }}
+                                </blockquote>
+                            {% endif %}
+                            <h6>发表于：{{ comment.create_timestamp|date:"Y-m-d P" }}</h6>
+                            <a href="#commentContent" class="btn btn-primary pull-right subCommentBtn" data-comment-id="{{ comment.id }}" data-owner="{{ comment.owner.username }}">回复</a>
+                            <div>{{ comment.content|linebreaksbr }}</div>
+                        {% endwith %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% include "component/paginator.html" with param_name="comment_page_no" %}
+      </div>
+
+        {% if user.is_authenticated %}
+          <div class="form-group form-group-sm">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">{{ user }}</label>
+            <div class="col-sm-10">
+              <textarea id="commentContent" class="form-control" rows="5"></textarea>
+            </div>
           </div>
+        <div class="row">
+            &nbsp;
         </div>
-{#评论展示及分页#}
-        {% for comment in comments %}
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <p>作者:{{ comment.owner }}</p>
-                <p>评论内容：{{ comment.content | linebreaksbr }}</p>
-                {% include "component/paginator.html" with param_name="comment_page_no" %}
-              </div>
-            </div>
-          {% endfor %}
-            {% if user.is_authenticated %}
-            <div class="input-group input-group-sm">
-              <span class="input-group-addon">作者:{{ user }}</span>
-              <input type="text" id="commentContent" class="form-control" placeholder="" aria-describedby="sizing-addon1">
-            </div>
-            <form method="post" action="">
-                <button type="submit" id="commentBtn" class="btn btn-primary btn-sm active">发表</button>
-            </form>
-            {% endif %}
+        <button type="submit" id="commentBtn" class="btn btn-primary btn-sm active">发表评论</button>
+        <div class="row">
+            &nbsp;
+        </div>
+        <div class="row">
+            &nbsp;
+        </div>
+        {% endif %}
+        <script type="text/javascript" src="/static/lib/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="/static/lib/jquery/jquery.csrf.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
+              if (window.location.href.indexOf('golast')>0) {
+                  window.location.href = window.location.href + "#lastcomment";
+              }
+              var article_id = {{ article.id }};
+              var page_cnt = {{ pagination.page_cnt }};
+              var to_comment_id = 0;
               $("#commentBtn").click(function () {
-                var article_id = {{ article.id }};
-                var to_comment_id = 0;
+{#                var article_id = {{ article.id }};#}
+{#                var to_comment_id = 0;#}
                 var comment = $("#commentContent").val();
-                var page_cnt = {{ page_cnt }};
-                var param = {"article_id": article_id, "to_comment_id": to_comment_id, "content": comment};
+{#                var page_cnt = {{ pagination.page_cnt }};#}
+                var param = {"article_id": article_id, "current_href": window.location.href, "to_comment_id": to_comment_id, "content": comment};
                 $.post("{% url 'create_comment' %}", param, function () {
                   $("#commentContent").val("");
-                  window.location.href = "{% url 'ariticle_detail' article.id %}?comment_page_no=" + (page_cnt + 1);
+                  to_comment_id = 0;
+                  window.location.href = "{% url 'ariticle_detail' article.id %}?comment_page_no=" + (page_cnt + 1)+"#golast=1";
                 });
               })
+                $(".subCommentBtn").click(function(e) {
+                    var btn = $(e.target);
+                    to_comment_id = parseInt(btn.attr("data-comment-id"));
+                    $("#commentContent").attr("placeholder","回复："+ btn.attr("data-owner"));
+                    $("#commentContent").focus();
+                    return false;
+                })
             });
         </script>
     {% endblock %}
+
+
+
+
+{#        <div class="panel panel-default">#}
+{#          <div class="panel-body">#}
+{#              <p>作者：{{ article.owner }}</p>#}
+{#              <p>标题：{{ article.title }}</p>#}
+{#              <p>内容：{{ article.content | linebreaksbr }}</p>#}
+{#              <p>创建时间：{{ article.create_timestamp|date:"Y-m-d P"}}</p>#}
+{#          </div>#}
+{#        </div>#}
+{#评论展示及分页#}
+{#        {% for comment in comments %}#}
+{#            <div class="panel panel-default">#}
+{#              <div class="panel-body">#}
+{#                <p>用户:{{ comment.owner }}</p>#}
+{#                <p>评论内容：{{ comment.content | linebreaksbr }}</p>#}
+{#                {% include "component/paginator.html" with param_name="comment_page_no" %}#}
+{#              </div>#}
+{#            </div>#}
+{#        {% endfor %}#}
+
+{#        <div class="input-group input-group-sm">#}
+{#          <span class="input-group-addon">用户:{{ user }}</span>#}
+{#          <input type="text" id="commentContent" class="form-control" placeholder="" aria-describedby="sizing-addon1">#}
+{#        </div>#}
