@@ -14,6 +14,7 @@ from django.contrib.auth.decorators import login_required
 from models import Article
 from comment.models import Comment
 from utils.paginator import paginate_queryset
+from usercenter.views import UserProfile
 
 # Create your views here.
 def article_list(request,block_id):
@@ -50,11 +51,13 @@ def create_article(request,block_id):
 def ariticle_detail(request,article_id):
     article_id = int(article_id)
     article = Article.objects.get(id=article_id)
+    profile_art = UserProfile.objects.get(owner=article.owner)
     comment_page_no = int(request.GET.get('comment_page_no','1'))
     comments = Comment.objects.filter(article=article)
     (comment_lists,pagination_data) = paginate_queryset(comments,comment_page_no,cnt_per_page=2,half_show_length=5)
     return render_to_response("article_detail.html",
                               {"comments":comment_lists,
                                'article':article,
-                               'pagination':pagination_data},
+                               'pagination':pagination_data,
+                               'profile_art':profile_art},
                               context_instance=RequestContext(request))

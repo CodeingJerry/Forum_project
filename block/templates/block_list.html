@@ -29,7 +29,8 @@
                         <a href="{% url 'message_list' %}"><span class="badge">{{ msg_cnt }}</span></a>
                         {% endif %}
                         <br />
-                        <p>{{ user.username }}.欢迎来到论坛</p>
+                        <center><a href="{% url 'uploadavatar' %}" target="_blank"><img width="100" height="100" src="{{ profile.avatar }}"></a></center>
+                        <center>{{ user.username }}.欢迎来到论坛</center>
                         <a class="btn btn-default" role="button" href="{% url 'logout_then_login' %}">退出登陆</a>
                         <p><a class="btn btn-default"  href="{% url 'password_change' %}">修改密码</a></p>
                     {% else %}

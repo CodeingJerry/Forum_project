@@ -10,6 +10,7 @@
               <tr>
                   <td class="author">
                       <br />
+                      <center><a href="{% url 'uploadavatar' %}" target="_blank"><img width="150" height="150" src="{{ profile_art.avatar }}"></a></center>
                       <center>作者：{{ article.owner.username }}</center>
                   </td>
                   <td class="content">
@@ -22,6 +23,7 @@
                 <tr {% if forloop.last %}id="lastcomment" {% endif %}>
                     <td class="author">
                         <br />
+                        <center><a href="{% url 'uploadavatar' %}" target="_blank"><img width="150" height="150" src="{{ comment.profile_com.avatar }}"></a></center>
                         <center>作者：{{ comment.owner.username }}</center>
                     </td>
                     <td class="content">

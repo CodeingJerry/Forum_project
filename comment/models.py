@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from block.models import Block
 from article.models import Article
 from django.db import models
+from usercenter.models import UserProfile
 
 class Comment(models.Model):
       block = models.ForeignKey(Block,verbose_name=u"所属版块")
@@ -22,6 +23,10 @@ class Comment(models.Model):
                   return None
             else:
                   return Comment.objects.get(id=self.to_comment_id)
+
+      @property
+      def profile_com(self):
+            return UserProfile.objects.get(owner=self.owner)
 
       def __unicode__(self):
             return self.content[:20]
