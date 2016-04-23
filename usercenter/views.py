@@ -3,11 +3,13 @@ from django.shortcuts import render,render_to_response,redirect
 from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.template import RequestContext
 from django.http import HttpResponse
 import uuid,datetime,os
 from  models import ActivateCode,UserProfile
 from myforum.settings import STORAGE_PATH,USERRES_URLBASE
+from random import randint
 # Create your views here.
 def register(request):
     error = ''
@@ -59,15 +61,25 @@ def uploadavatar(request):
         return render_to_response('uploadavatar.html',{'profile':profile},context_instance=RequestContext(request))
     else:
         avatar_file = request.FILES.get("avatar",None)
-        filr_path = os.path.join(STORAGE_PATH,avatar_file.name)
+        if avatar_file.size > 1048576:
+            messages.add_message(request,messages.WARNING,u'图像大小不能超过2M')
+            return render_to_response('uploadavatar.html',{'profile':profile},context_instance=RequestContext(request))
+        temp_name = avatar_file.name
+        while UserProfile.objects.filter(avatar=USERRES_URLBASE + temp_name).count() > 0:   # 判断是否有重名图像存在，如果有时加随机数改名
+            temp_name = str(randint(1,100)) + temp_name
+            if not UserProfile.objects.filter(avatar=USERRES_URLBASE + temp_name).count() > 0:
+                break
+        filr_path = os.path.join(STORAGE_PATH,temp_name)     # 存储文件到nginx
         with open(filr_path,'wb+')as destination:
             for chunk in avatar_file.chunks():
                 destination.write(chunk)
-
-        url = "%s%s" % (USERRES_URLBASE,avatar_file.name)
+        url = "%s%s" % (USERRES_URLBASE,temp_name)
         profile.avatar = url
         profile.save()
         return HttpResponse(u"上传成功")
+
+        # messages.add_message(request,messages.WARNING,u'存在一个相同名称的头像，请修改图片名称')
+        # return render_to_response('uploadavatar.html',{'profile':profile},context_instance=RequestContext(request))
 
 
 

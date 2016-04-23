@@ -6,6 +6,11 @@
     <div class="row">
         &nbsp;
     </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
     <div class="panel panel-success">
           <div class="panel-heading">
                   更换头像
