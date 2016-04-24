@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'usercenter',
     'comment',
     'message',
+    'DjangoUeditor',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -138,3 +139,4 @@ STATICFILES_DIRS = (
 )
 STORAGE_PATH = 'C:\Users\lijunchao\userres'
 USERRES_URLBASE = 'http://res.myform.com/'
+MEDIA_ROOT = 'C:\Users\lijunchao\userres\article'
