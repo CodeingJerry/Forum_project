@@ -137,6 +137,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR,"static"),
 )
-STORAGE_PATH = 'C:\Users\lijunchao\userres'
+STORAGE_PATH = 'C:\\Users\\lijunchao\\userres'
 USERRES_URLBASE = 'http://res.myform.com/'
-MEDIA_ROOT = 'C:\Users\lijunchao\userres\article'
+MEDIA_ROOT = 'C:\\Users\\lijunchao\\userres\\article\\'
